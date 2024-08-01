@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow Old Together?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #fff;
+            text-align: center;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px #000;
+        }
+        .buttons {
+            margin-top: 2rem;
+        }
+        button {
+            font-size: 1.5rem;
+            padding: 0.75rem 2rem;
+            margin: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+        #yesBtn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #yesBtn:hover {
+            background-color: #45a049;
+        }
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+        }
+        #noBtn:hover {
+            background-color: #e53935;
+        }
+        .hidden {
+            display: none;
+        }
+        .message {
+            margin-top: 2rem;
+        }
+        #bouquet {
+            width: 150px;
+            margin-top: 1rem;
+        }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+            animation: confetti-animation 5s ease-out forwards;
+        }
+        @keyframes confetti-animation {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Grow Old Together?</h1>
+    <div class="buttons">
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+    </div>
+    <div id="response" class="message hidden"></div>
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const response = document.getElementById('response');
+        const sadMessages = [
+            "This is breaking my heart...",
+            "I am tearing up...",
+            "I am really sad...",
+            "I am really really sad..."
+        ];
+        let sadIndex = 0;
+
+        yesBtn.addEventListener('click', () => {
+            response.innerHTML = `
+                <h2>Now we are officially a Couple!</h2>
+                <p>Happy Girlfriend Day!</p>
+                <img id="bouquet" src="https://image.floranext.com/shared/catalog/product/W/r/Wrapped-DC-1.png.webp" alt="Bouquet">
+            `;
+            response.classList.remove('hidden');
+            throwConfetti();
+        });
+
+        noBtn.addEventListener('click', () => {
+            if (sadIndex < sadMessages.length) {
+                response.innerHTML = `<h2>${sadMessages[sadIndex]}</h2>`;
+                sadIndex++;
+            }
+            response.classList.remove('hidden');
+            const scale = parseFloat(noBtn.style.transform.replace('scale(', '').replace(')', '')) || 1;
+            noBtn.style.transform = `scale(${scale * 0.9})`;
+        });
+
+        function throwConfetti() {
+            const colors = ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1bd', '#f9bec7'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 8000);
+            }
+        }
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBL2pD-5n5L7Oo5AIe6C-75G0xGcqPcGtQ",
+    authDomain: "gf-day.firebaseapp.com",
+    projectId: "gf-day",
+    storageBucket: "gf-day.appspot.com",
+    messagingSenderId: "533944149998",
+    appId: "1:533944149998:web:8129b12b419f6da69ad0ff"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
+    </script>
+</body>
+</html>
